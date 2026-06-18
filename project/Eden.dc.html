@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Anybody";src:url("fonts/Anybody-VariableFont.ttf") format("truetype");font-weight:100 900;font-stretch:75% 125%;font-style:normal;font-display:swap;}
+@font-face{font-family:"Lato";src:url("fonts/Lato-Light.ttf") format("truetype");font-weight:300;font-display:swap;}
+@font-face{font-family:"Lato";src:url("fonts/Lato-Regular.ttf") format("truetype");font-weight:400;font-display:swap;}
+@font-face{font-family:"Lato";src:url("fonts/Lato-Bold.ttf") format("truetype");font-weight:700;font-display:swap;}
+@font-face{font-family:"Lato";src:url("fonts/Lato-Black.ttf") format("truetype");font-weight:900;font-display:swap;}
+@font-face{font-family:"Nanum Pen Script";src:url("fonts/NanumPenScript-Regular.ttf") format("truetype");font-weight:400;font-display:swap;}
+html,body{margin:0;padding:0;background:#2d1c14;}
+*{box-sizing:border-box;}
+@keyframes ezbob{0%,100%{transform:translateY(0);opacity:.85}50%{transform:translateY(9px);opacity:.35}}
+@keyframes ezspin{to{transform:rotate(360deg)}}
+#ez-site{position:fixed;left:50%;transform:translateX(-50%);bottom:clamp(16px,3vw,32px);z-index:60;display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2d1c14;color:#f6f4f2;font-family:'Lato',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 6px 20px rgba(45,28,20,0.28);transition:transform .16s ease,background .16s ease;}
+#ez-site:hover{background:#3a2419;transform:translateX(-50%) translateY(-1px);}
+#ez-site .ez-arrow{color:#b4c62a;font-size:15px;line-height:1;}
+@media (max-width:768px){
+  .ez-row{flex-direction:column!important;justify-content:flex-end!important;align-items:flex-start!important;padding:24px 24px 116px!important;gap:18px!important;}
+  .ez-side{width:100%!important;max-width:90vw!important;}
+  .ez-bigword{font-size:clamp(30px,9vw,40px)!important;}
+  .ez-pros{top:auto!important;bottom:160px!important;left:24px!important;transform:none!important;}
+  .ez-cons{top:auto!important;bottom:160px!important;right:24px!important;transform:none!important;}
+}
+</style>
+</helmet>
+
+<canvas id="scene" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:2;pointer-events:none;display:block;"></canvas>
+
+<div id="spin" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:4;width:38px;height:38px;border:2px solid rgba(180,198,42,0.25);border-top-color:#b4c62a;border-radius:50%;animation:ezspin 0.9s linear infinite;opacity:0;transition:opacity 0.4s ease;pointer-events:none;"></div>
+
+<a id="ez-site" href="https://ezmotif.com" target="_blank" rel="noopener" style="text-align: center; justify-content: center; font-size: 14px; font-family: Anybody; font-weight: 400; align-items: center; gap: 10px">ezmotif.com<span class="ez-arrow" style="align-self: auto; position: static">→</span></a>
+
+
+
+<!-- ============ SCREEN 1 — HI / INTRO (dark) ============ -->
+<section data-section="" data-screen-label="01" style="position: relative; width: 100%; height: 100vh; overflow: hidden; background-color: #5079b2">
+  <div style="position:relative;z-index:3;height:100%;width:100%;">
+    <!-- Variant A: editorial split -->
+    <sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}">
+      <div class="ez-row" style="position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:clamp(28px,5.5vw,96px);pointer-events:none;">
+        <div data-parallax="-0.10" class="ez-side" style="max-width:min(46vw,520px);">
+          <div style="font-family:'Lato',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:#9c8275;margin-bottom:clamp(16px,2vw,28px);">Designer · Aotearoa New Zealand</div>
+          <div style="font-family:'Anybody',sans-serif;font-weight:900;font-stretch:112%;line-height:0.96;letter-spacing:-0.02em;text-transform:uppercase;color:#f6f4f2;font-size:clamp(2.6rem,6.6vw,5.6rem);">
+            <div>Kia ora,</div>
+            <div>I'm Eden<span style="color:#b4c62a;">.</span></div>
+          </div>
+        </div>
+        <div data-parallax="0.08" class="ez-side" style="max-width:min(33vw,360px);text-align:left;">
+          <p style="font-family:'Lato',sans-serif;font-weight:300;font-size:clamp(1rem,1.15vw,1.18rem);line-height:1.6;color:#e7e1da;margin:0 0 clamp(20px,2.4vw,30px);">A designer powered by curiosity, coffee, ice cream — and the belief that good design should make life feel a little easier.</p>
+          <div style="display:flex;gap:28px;margin-bottom:18px;">
+            <div>
+              <div style="font-family:'Lato',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:#b4c62a;margin-bottom:8px;">Pros</div>
+              <div style="font-family:'Lato',sans-serif;font-weight:300;font-size:0.92rem;line-height:1.7;color:#cdc0b8;">Curious<br>Experimental<br>Responsible</div>
+            </div>
+            <div>
+              <div style="font-family:'Lato',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:#9c8275;margin-bottom:8px;">Cons</div>
+              <div style="font-family:'Lato',sans-serif;font-weight:300;font-size:0.92rem;line-height:1.7;color:#cdc0b8;">A touch OCD<br>Hyperactive&nbsp;(sometimes)</div>
+            </div>
+          </div>
+          <div style="font-family:'Nanum Pen Script',cursive;font-size:1.9rem;line-height:1;color:#b4c62a;transform:rotate(-4deg);transform-origin:left;">fuelled by coffee &amp; curiosity</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Variant B: centered stage -->
+    <sc-if value="{{ isB }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+        <div style="font-family: 'Anybody',sans-serif; font-weight: 900; font-stretch: 125%; font-size: clamp(7rem,23vw,15rem); letter-spacing: -0.04em; color: rgba(246,244,242,0.05); white-space: nowrap; text-transform: uppercase">EDEN</div>
+      </div>
+      <div style="position:absolute;inset:0;pointer-events:none;">
+        <div data-parallax="-0.06" style="position:absolute;top:clamp(70px,12vh,150px);left:0;right:0;text-align:center;">
+          <div style="font-family: 'Nanum Pen Script',cursive; font-size: 46px; color: #b4c62a; transform: rotate(-3deg)">Kia Ora</div>
+          <div style="font-family: 'Lato',sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: #d3cfcb; margin-top: 6px">Designer · powered by curiosity, coffee &amp; ice cream</div>
+        </div>
+        <div data-parallax="0.05" class="ez-pros" style="position: absolute; top: 50%; left: clamp(28px,5vw,80px); transform: translateY(-50%)">
+          <div style="font-family: 'Lato',sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #b4c62a; margin-bottom: 12px">Pros</div>
+          <div style="font-family: Nanum Pen Script; font-weight: 300; font-size: 26px; line-height: 1; color: #e7e1da">Curious<br>Experimental<br>Responsible</div>
+        </div>
+        <div data-parallax="0.05" class="ez-cons" style="position: absolute; top: 50%; right: clamp(28px,5vw,80px); transform: translateY(-50%); text-align: right">
+          <div style="font-family: 'Lato',sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #8a9fb7; margin-bottom: 12px">Cons</div>
+          <div style="font-family: Nanum Pen Script; font-weight: 300; font-size: 26px; line-height: 1; color: #e7e1da">OCD<br>Hyperactive<br>(sometimes)</div>
+        </div>
+        <div data-parallax="0.10" style="position:absolute;bottom:clamp(80px,14vh,150px);left:0;right:0;text-align:center;">
+          <p style="font-family:'Lato',sans-serif;font-weight:300;font-size:clamp(1rem,1.2vw,1.2rem);line-height:1.6;color:#e7e1da;max-width:520px;margin:0 auto;"><br></p>
+        </div>
+      </div>
+    </sc-if>
+
+    <div id="hint1" style="position:absolute;bottom:clamp(26px,4vh,44px);left:0;right:0;text-align:center;pointer-events:none;">
+      <div style="font-family: 'Lato',sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #2d1c14; margin-bottom: 10px">Scroll</div>
+      <div style="width: 1px; height: 34px; margin: 0 auto; background: linear-gradient(180deg, #2d1c14, transparent); animation: ezbob 1.8s ease-in-out infinite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 2 — IDEA HATCHING (light) ============ -->
+<section data-section="" data-screen-label="02" style="position: relative; width: 100%; height: 100vh; overflow: hidden; background-color: #d3cfcb">
+  <div class="ez-row" style="position:relative;z-index:3;height:100%;width:100%;display:flex;justify-content:space-between;align-items:center;padding:clamp(28px,5.5vw,96px);pointer-events:none;">
+    <div data-parallax="-0.10" class="ez-side" style="max-width: min(40vw,440px); width: 330px">
+      <div style="font-family:'Lato',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:#9c8275;margin-bottom:clamp(16px,2vw,26px);"><br></div>
+      <div style="font-family:'Anybody',sans-serif;font-weight:900;font-stretch:112%;line-height:0.96;letter-spacing:-0.02em;text-transform:uppercase;color:#2d1c14;font-size:clamp(2.4rem,5.6vw,4.8rem);">
+        <div class="ez-bigword" style="font-size: 55px">HATCH</div>
+        <div class="ez-bigword" style="font-size: 55px">IDEAS</div>
+      </div>
+      <div style="font-family: 'Nanum Pen Script',cursive; font-size: 20px; line-height: 1; color: #5079b2; transform: rotate(-3deg); margin-top: clamp(20px,2.5vw,30px); width: 300px">Hydration level: 1L of coffee and absolutely no regrets. ☕️😌</div>
+    </div>
+    <div data-parallax="0.08" class="ez-side" style="max-width: min(34vw,380px); width: 220px">
+      <p style="font-family: 'Lato',sans-serif; font-weight: 300; font-size: 14px; line-height: 1.5; color: #4a3327; margin: 0 0 18px">For the past seven years I've helped brands, products and teams bring ideas to life through thoughtful design — global campaigns, digital experiences, brand identities, and everything in between.</p>
+      <p style="font-family: 'Lato',sans-serif; font-weight: 300; font-size: 14px; line-height: 1.5; color: #4a3327; margin: 0">I love simplifying complicated things and finding inspiration where most people overlook it — crafting experiences that feel natural, memorable and genuinely human.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 3 — OUTSIDE WORK (dark) ============ -->
+<section data-section="" data-screen-label="03" style="position: relative; width: 100%; height: 100vh; overflow: hidden; background-color: #b4c62a">
+  <div class="ez-row" style="position:relative;z-index:3;height:100%;width:100%;display:flex;justify-content:space-between;align-items:center;padding:clamp(28px,5.5vw,96px);pointer-events:none;">
+    <div data-parallax="-0.10" class="ez-side" style="max-width: min(40vw,440px); width: 330px">
+      
+      <div style="font-family:'Anybody',sans-serif;font-weight:900;font-stretch:112%;line-height:0.96;letter-spacing:-0.02em;text-transform:uppercase;color:#f6f4f2;font-size:clamp(2.4rem,5.6vw,4.8rem);">
+        <div class="ez-bigword" style="font-size: 55px">Outside</div>
+        <div class="ez-bigword" style="font-size: 55px">Work</div>
+      </div>
+    </div>
+    <div data-parallax="0.08" class="ez-side" style="max-width: min(34vw,380px); width: 220px">
+      <p style="font-family: 'Lato',sans-serif; font-weight: 400; font-size: 14px; line-height: 1.5; color: #2d1c14; margin: 0 0 clamp(18px,2.4vw,28px)">When I'm not designing, you'll probably find me exploring new cafés, hiking through natural landscapes, or soaking in the gym.</p>
+      <div style="font-family: 'Nanum Pen Script',cursive; font-size: 20px; line-height: 1; color: #5079b2; transform: rotate(-4deg); transform-origin: left; width: 220px">No signal: Somewhere on a trail, upgrading my cardio instead of my inbox. 🌲🥾</div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;},&quot;heroVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;],&quot;default&quot;:&quot;B&quot;,&quot;tsType&quot;:&quot;\&quot;A\&quot;|\&quot;B\&quot;&quot;},&quot;frontYaw1&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:-90,&quot;min&quot;:-180,&quot;max&quot;:180,&quot;step&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;frontYaw2&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:-90,&quot;min&quot;:-180,&quot;max&quot;:180,&quot;step&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;frontYaw3&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:-90,&quot;min&quot;:-180,&quot;max&quot;:180,&quot;step&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;model1Src&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://dl.dropboxusercontent.com/scl/fi/qskipl5zqc1no1ounqouc/Hi_Textured-view.glb?rlkey=ff3zc77q9altmlkda5raiq63v&amp;dl=1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;model2Src&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://dl.dropboxusercontent.com/scl/fi/xvqv9pbvxfb0mbg5f8zss/Idea-Hatching_Textured-View.glb?rlkey=uu3fpdk7akxqth5jfztjdgkla&amp;dl=1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;model3Src&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://dl.dropboxusercontent.com/scl/fi/fm1mu1jkcd6yvwdm8pyba/Outside-Work_Textured-View.glb?rlkey=k71y0a2swxvliftqetm3ejufc&amp;dl=1&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const v = this.props.heroVariant ?? "A";
+    return {
+      isA: v === "A",
+      isB: v === "B",
+    };
+  }
+
+  componentDidMount() {
+    this._mounted = true;
+    this.mouseX = 0;
+    this.mouseY = 0;
+    const onMove = (e) => {
+      this.mouseX = (e.clientX / window.innerWidth) - 0.5;
+      this.mouseY = (e.clientY / window.innerHeight) - 0.5;
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+
+    const model1 = this.props.model1Src ?? "https://dl.dropboxusercontent.com/scl/fi/qskipl5zqc1no1ounqouc/Hi_Textured-view.glb?rlkey=ff3zc77q9altmlkda5raiq63v&dl=1";
+    const model2 = this.props.model2Src ?? "https://dl.dropboxusercontent.com/scl/fi/xvqv9pbvxfb0mbg5f8zss/Idea-Hatching_Textured-View.glb?rlkey=uu3fpdk7akxqth5jfztjdgkla&dl=1";
+    const model3 = this.props.model3Src ?? "https://dl.dropboxusercontent.com/scl/fi/fm1mu1jkcd6yvwdm8pyba/Outside-Work_Textured-View.glb?rlkey=k71y0a2swxvliftqetm3ejufc&dl=1";
+
+    this._init(model1, model2, model3).catch((e) => console.error("[Eden3D] init failed", e));
+
+    this._cleanup = () => { window.removeEventListener("mousemove", onMove); };
+  }
+
+  async _init(m1, m2, m3) {
+    const canvas = document.getElementById("scene");
+    if (!canvas) return;
+
+    const THREE = await import("https://esm.sh/three@0.160.0");
+    const { GLTFLoader } = await import("https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js");
+    const { RoomEnvironment } = await import("https://esm.sh/three@0.160.0/examples/jsm/environments/RoomEnvironment.js");
+    if (!this._mounted) return;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+    camera.position.set(0, 0, 7);
+
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+    const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(3, 5, 4); scene.add(key);
+    const fill = new THREE.DirectionalLight(0xffe9d6, 0.7); fill.position.set(-4, 2, 2); scene.add(fill);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+
+    const TARGET_H = 2.2;
+    const SPAN = 4.4;   // world units that equal one viewport height at model depth
+    const PAR = 0.82;   // parallax factor (<1 => model trails the page)
+    const groups = [null, null, null];
+
+    const loader = new GLTFLoader();
+    const urls = [m1, m2, m3];
+    const requested = [false, false, false];
+    const loadModel = (i) => {
+      if (requested[i] || !urls[i]) return;
+      requested[i] = true;
+      const sp = document.getElementById("spin");
+      if (sp) sp.style.opacity = "1";
+      loader.load(urls[i], (gltf) => {
+        if (!this._mounted) return;
+        const obj = gltf.scene;
+        const box = new THREE.Box3().setFromObject(obj);
+        const size = new THREE.Vector3(); box.getSize(size);
+        const center = new THREE.Vector3(); box.getCenter(center);
+        const s = TARGET_H / (size.y || 1);
+        obj.scale.setScalar(s);
+        obj.position.set(-center.x * s, -center.y * s, -center.z * s);
+        const g = new THREE.Group();
+        g.add(obj);
+        g.visible = false;
+        scene.add(g);
+        groups[i] = g;
+        const sp2 = document.getElementById("spin");
+        if (sp2) sp2.style.opacity = "0";
+      }, undefined, (err) => {
+        requested[i] = false;
+        console.error("[Eden3D] model load failed", urls[i], err);
+      });
+    };
+    loadModel(0); // first model up front; others lazy-load on approach
+
+    const resize = () => {
+      const w = window.innerWidth, h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h, false);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const DEG = Math.PI / 180;
+    const SCROLL_SPIN = 2.0; // radians the model spins across one screen of scroll
+    const st = { mRY: 0, rx: 0 };
+    const animate = () => {
+      if (!this._mounted) { renderer.dispose(); return; }
+      const h = window.innerHeight;
+      const sy = window.scrollY || window.pageYOffset || 0;
+      const progress = sy / h;
+
+      // mouse-only nudge, smoothed (scroll spin is applied per-model below)
+      const tMRY = this.mouseX * 0.55;
+      const tRX = Math.max(-0.42, Math.min(0.42, this.mouseY * 0.4));
+      st.mRY += (tMRY - st.mRY) * 0.08;
+      st.rx += (tRX - st.rx) * 0.08;
+
+      // per-model front angle (live from tweaks)
+      const front = [
+        (this.props.frontYaw1 ?? -90) * DEG,
+        (this.props.frontYaw2 ?? -90) * DEG,
+        (this.props.frontYaw3 ?? -90) * DEG,
+      ];
+
+      // lazy-load models as they come within ~1.3 screens of center
+      for (let i = 0; i < 3; i++) {
+        if (Math.abs(progress - i) < 1.3) loadModel(i);
+      }
+
+      // on mobile, lift the model into the upper band so stacked text sits clear below it
+      const mobile = window.innerWidth <= 768;
+      const yLift = mobile ? 1.45 : 0;
+
+      groups.forEach((g, i) => {
+        if (!g) return;
+        const d = progress - i;            // 0 when this model is centered on screen
+        g.visible = Math.abs(d) < 0.92;
+        g.position.y = d * SPAN * PAR + yLift;
+        // front-facing when centered; scroll spins it relative to that front; mouse nudges
+        g.rotation.y = front[i] + d * SCROLL_SPIN + st.mRY;
+        g.rotation.x = st.rx;
+      });
+
+      const hint = document.getElementById("hint1");
+      if (hint) hint.style.opacity = String(Math.max(0, 1 - sy / 280));
+
+      renderer.render(scene, camera);
+      this._raf = requestAnimationFrame(animate);
+    };
+    animate();
+
+    this._disposeExtra = () => { window.removeEventListener("resize", resize); };
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._cleanup) this._cleanup();
+    if (this._disposeExtra) this._disposeExtra();
+  }
+}
+</script>
+</body>
+</html>

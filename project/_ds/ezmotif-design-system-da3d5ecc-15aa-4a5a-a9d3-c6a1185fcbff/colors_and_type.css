@@ -1,0 +1,259 @@
+/* ==========================================================================
+   EZMOTIF STUDIO VISUALS — Core Color & Type Tokens
+   Scandinavian-inspired: calm, refined, intentional, with a bold presence.
+   ========================================================================== */
+
+/* ---------- Fonts ---------- */
+@font-face {
+  font-family: "Anybody";
+  src: url("fonts/Anybody-VariableFont.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Anybody";
+  src: url("fonts/Anybody-Italic-VariableFont.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-Thin.ttf") format("truetype");
+  font-weight: 100; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-Light.ttf") format("truetype");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-Italic.ttf") format("truetype");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-Bold.ttf") format("truetype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-BoldItalic.ttf") format("truetype");
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-Black.ttf") format("truetype");
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-BlackItalic.ttf") format("truetype");
+  font-weight: 900; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-ThinItalic.ttf") format("truetype");
+  font-weight: 100; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-LightItalic.ttf") format("truetype");
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Nanum Pen Script";
+  src: url("fonts/NanumPenScript-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+:root {
+  /* ---------- Brand palette (raw) ---------- */
+  --espresso:      #2d1c14;  /* primary — deep, grounded, near-black brown */
+  --stone-grey:    #d3cfcb;  /* primary — warm light neutral */
+  --mist-blue:     #8a9fb7;  /* secondary — soft, atmospheric */
+  --horizon-blue:  #5079b2;  /* secondary — confident mid blue */
+  --pure-white:    #ffffff;  /* secondary — clean ground */
+  --acid-lime:     #b4c62a;  /* accent — sharp, energetic, sparing */
+
+  /* ---------- Espresso tints (derived, warm-brown ramp) ---------- */
+  --espresso-900:  #2d1c14;
+  --espresso-700:  #4a3327;
+  --espresso-500:  #6b4f3f;
+  --espresso-300:  #9c8275;
+  --espresso-100:  #cdc0b8;
+
+  /* ---------- Stone / neutral ramp (warm greys) ---------- */
+  --stone-050:     #f6f4f2;  /* near-white paper */
+  --stone-100:     #eceae7;
+  --stone-200:     #d3cfcb;  /* = stone grey */
+  --stone-300:     #b9b3ad;
+  --stone-400:     #968f88;
+  --stone-500:     #6f6862;
+
+  /* ---------- Semantic surfaces ---------- */
+  --bg:            var(--stone-050);   /* default page ground */
+  --bg-raised:     var(--pure-white);  /* cards, panels */
+  --bg-sunken:     var(--stone-100);   /* wells, insets */
+  --bg-inverse:    var(--espresso-900);/* dark sections */
+
+  /* ---------- Semantic foreground ---------- */
+  --fg1:           var(--espresso-900);/* primary text */
+  --fg2:           var(--espresso-500);/* secondary text */
+  --fg3:           var(--stone-400);   /* tertiary / captions */
+  --fg-on-dark:    var(--stone-050);   /* text on espresso */
+  --fg-on-dark-2:  var(--espresso-100);/* muted text on espresso */
+
+  /* ---------- Semantic accents ---------- */
+  --accent:        var(--acid-lime);   /* primary CTA / highlight */
+  --accent-ink:    var(--espresso-900);/* text on lime */
+  --link:          var(--horizon-blue);
+  --link-hover:    #3f6394;
+
+  /* ---------- Borders & lines ---------- */
+  --border:        var(--stone-200);
+  --border-strong: var(--stone-300);
+  --border-ink:    var(--espresso-900);
+  --hairline:      rgba(45, 28, 20, 0.10);
+
+  /* ---------- Type families ---------- */
+  --font-display:  "Anybody", system-ui, sans-serif;  /* headings, titles */
+  --font-body:     "Lato", system-ui, sans-serif;      /* paragraph / UI */
+  --font-script:   "Nanum Pen Script", "Lato", cursive;/* decorative only */
+
+  /* ---------- Type scale (1.250 major third, 16px base) ---------- */
+  --text-xs:   0.75rem;   /* 12 */
+  --text-sm:   0.875rem;  /* 14 */
+  --text-base: 1rem;      /* 16 */
+  --text-md:   1.25rem;   /* 20 */
+  --text-lg:   1.563rem;  /* 25 */
+  --text-xl:   1.953rem;  /* 31 */
+  --text-2xl:  2.441rem;  /* 39 */
+  --text-3xl:  3.052rem;  /* 49 */
+  --text-4xl:  3.815rem;  /* 61 */
+  --text-5xl:  4.768rem;  /* 76 */
+
+  /* ---------- Weights ---------- */
+  --w-thin: 100; --w-light: 300; --w-regular: 400;
+  --w-bold: 700; --w-black: 900;
+
+  /* ---------- Line heights / tracking ---------- */
+  --leading-tight: 1.04;
+  --leading-snug:  1.22;
+  --leading-body:  1.6;
+  --tracking-display: -0.02em;
+  --tracking-tight:   -0.01em;
+  --tracking-wide:    0.16em;  /* eyebrows / labels */
+
+  /* ---------- Spacing scale (4px base) ---------- */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-5: 24px;  --space-6: 32px;  --space-7: 48px;  --space-8: 64px;
+  --space-9: 96px;  --space-10: 128px;
+
+  /* ---------- Radii (restrained, mostly square) ---------- */
+  --radius-none: 0px;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-pill: 999px;
+
+  /* ---------- Elevation (soft, warm-tinted, low spread) ---------- */
+  --shadow-sm: 0 1px 2px rgba(45, 28, 20, 0.06);
+  --shadow-md: 0 4px 16px rgba(45, 28, 20, 0.08);
+  --shadow-lg: 0 12px 40px rgba(45, 28, 20, 0.12);
+
+  /* ---------- Motion ---------- */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:   140ms;
+  --dur-base:   240ms;
+  --dur-slow:   420ms;
+}
+
+/* ==========================================================================
+   Semantic element styles — apply with these classes or copy the rules.
+   ========================================================================== */
+
+.ez-eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--w-bold);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--fg2);
+}
+
+.ez-h1 {
+  font-family: var(--font-display);
+  font-weight: var(--w-black);
+  font-stretch: 112%;
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg1);
+  text-transform: uppercase;
+}
+.ez-h2 {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg1);
+}
+.ez-h3 {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--fg1);
+}
+.ez-h4 {
+  font-family: var(--font-body);
+  font-weight: var(--w-black);
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
+  color: var(--fg1);
+}
+
+.ez-lead {
+  font-family: var(--font-body);
+  font-weight: var(--w-light);
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+  color: var(--fg2);
+}
+.ez-p {
+  font-family: var(--font-body);
+  font-weight: var(--w-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--fg1);
+}
+.ez-small {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  color: var(--fg2);
+}
+.ez-caption {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--fg3);
+}
+.ez-script {
+  font-family: var(--font-script);
+  font-weight: var(--w-regular);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--fg1);
+}
