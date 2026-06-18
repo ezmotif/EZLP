@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eden — Designer · Aotearoa New Zealand</title>
+  <style>
+    @font-face{font-family:"Anybody";src:url("project/fonts/Anybody-VariableFont.ttf") format("truetype");font-weight:100 900;font-stretch:75% 125%;font-style:normal;font-display:swap;}
+    @font-face{font-family:"Lato";src:url("project/fonts/Lato-Light.ttf") format("truetype");font-weight:300;font-display:swap;}
+    @font-face{font-family:"Lato";src:url("project/fonts/Lato-Regular.ttf") format("truetype");font-weight:400;font-display:swap;}
+    @font-face{font-family:"Lato";src:url("project/fonts/Lato-Bold.ttf") format("truetype");font-weight:700;font-display:swap;}
+    @font-face{font-family:"Lato";src:url("project/fonts/Lato-Black.ttf") format("truetype");font-weight:900;font-display:swap;}
+    @font-face{font-family:"Nanum Pen Script";src:url("project/fonts/NanumPenScript-Regular.ttf") format("truetype");font-weight:400;font-display:swap;}
+
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{margin:0;padding:0;background:#2d1c14;overflow-x:hidden;}
+
+    @keyframes ezbob{0%,100%{transform:translateY(0);opacity:.85}50%{transform:translateY(9px);opacity:.35}}
+    @keyframes ezspin{to{transform:rotate(360deg)}}
+
+    /* Fixed 3D canvas — sits behind all text */
+    #scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:2;pointer-events:none;display:block;}
+
+    /* Loading spinner */
+    #spin{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:4;width:38px;height:38px;border:2px solid rgba(180,198,42,0.25);border-top-color:#b4c62a;border-radius:50%;animation:ezspin 0.9s linear infinite;opacity:0;transition:opacity 0.4s ease;pointer-events:none;}
+
+    /* Portfolio pill — fixed bottom-center */
+    #ez-site{position:fixed;left:50%;transform:translateX(-50%);bottom:clamp(16px,3vw,32px);z-index:60;display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:#2d1c14;color:#f6f4f2;font-family:'Lato',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.04em;text-decoration:none;border-radius:2px;box-shadow:0 6px 20px rgba(45,28,20,0.28);transition:transform .16s ease,background .16s ease;white-space:nowrap;}
+    #ez-site:hover{background:#3a2419;transform:translateX(-50%) translateY(-1px);}
+    .ez-arrow{color:#b4c62a;font-size:15px;line-height:1;}
+
+    /* Sections */
+    section{position:relative;width:100%;height:100vh;overflow:hidden;}
+    #s1{background-color:#5079b2;}
+    #s2{background-color:#d3cfcb;}
+    #s3{background-color:#b4c62a;}
+
+    /* ——— SCREEN 1 ——— */
+    /* Ghost EDEN letterform behind model */
+    .s1-ghost{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      font-family:'Anybody',sans-serif;font-weight:900;font-stretch:125%;
+      font-size:clamp(7rem,23vw,15rem);letter-spacing:-0.04em;
+      color:rgba(246,244,242,0.05);white-space:nowrap;text-transform:uppercase;
+      pointer-events:none;z-index:3;
+    }
+
+    /* Top: Kia Ora + tagline */
+    .s1-top{
+      position:absolute;top:clamp(70px,12vh,150px);left:0;right:0;
+      text-align:center;z-index:3;pointer-events:none;
+    }
+    .s1-kiaora{
+      font-family:'Nanum Pen Script',cursive;font-size:46px;color:#b4c62a;
+      transform:rotate(-3deg);display:inline-block;
+    }
+    .s1-tagline{
+      font-family:'Lato',sans-serif;font-weight:700;font-size:14px;
+      letter-spacing:0.22em;text-transform:uppercase;color:#d3cfcb;margin-top:6px;
+    }
+
+    /* Left: Pros */
+    .ez-pros{
+      position:absolute;top:50%;left:clamp(28px,5vw,80px);
+      transform:translateY(calc(-50% + var(--py,0px)));
+      z-index:3;pointer-events:none;
+    }
+
+    /* Right: Cons */
+    .ez-cons{
+      position:absolute;top:50%;right:clamp(28px,5vw,80px);
+      text-align:right;
+      transform:translateY(calc(-50% + var(--py,0px)));
+      z-index:3;pointer-events:none;
+    }
+
+    .label-lime{font-family:'Lato',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#b4c62a;margin-bottom:12px;}
+    .label-mist{font-family:'Lato',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#8a9fb7;margin-bottom:12px;}
+    .script-sm{font-family:'Nanum Pen Script',cursive;font-size:26px;line-height:1;color:#e7e1da;}
+
+    /* Scroll hint */
+    .s1-hint{position:absolute;bottom:clamp(26px,4vh,44px);left:0;right:0;text-align:center;pointer-events:none;z-index:3;}
+    .s1-hint .hint-label{font-family:'Lato',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.26em;text-transform:uppercase;color:#2d1c14;margin-bottom:10px;}
+    .s1-hint .hint-line{width:1px;height:34px;margin:0 auto;background:linear-gradient(180deg,#2d1c14,transparent);animation:ezbob 1.8s ease-in-out infinite;}
+
+    /* ——— SCREENS 2 & 3 ROW LAYOUT ——— */
+    .ez-row{
+      position:relative;z-index:3;height:100%;width:100%;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:clamp(28px,5.5vw,96px);pointer-events:none;
+    }
+
+    /* ——— SCREEN 2 ——— */
+    .s2-left{max-width:min(40vw,440px);width:330px;}
+    .s2-right{max-width:min(34vw,380px);width:220px;}
+
+    .s2-headline{
+      font-family:'Anybody',sans-serif;font-weight:900;font-stretch:112%;line-height:0.96;
+      letter-spacing:-0.02em;text-transform:uppercase;color:#2d1c14;
+    }
+    .ez-bigword{font-size:55px;}
+    .s2-accent{
+      font-family:'Nanum Pen Script',cursive;font-size:20px;line-height:1;color:#5079b2;
+      transform:rotate(-3deg);margin-top:clamp(20px,2.5vw,30px);width:300px;display:block;
+    }
+
+    .body-s2{font-family:'Lato',sans-serif;font-weight:300;font-size:14px;line-height:1.5;color:#4a3327;margin:0 0 18px;}
+    .body-s2:last-child{margin:0;}
+
+    /* ——— SCREEN 3 ——— */
+    .s3-left{max-width:min(40vw,440px);width:330px;}
+    .s3-right{max-width:min(34vw,380px);width:220px;}
+
+    .s3-headline{
+      font-family:'Anybody',sans-serif;font-weight:900;font-stretch:112%;line-height:0.96;
+      letter-spacing:-0.02em;text-transform:uppercase;color:#f6f4f2;
+    }
+    .body-s3{font-family:'Lato',sans-serif;font-weight:400;font-size:14px;line-height:1.5;color:#2d1c14;margin:0 0 clamp(18px,2.4vw,28px);}
+    .s3-accent{
+      font-family:'Nanum Pen Script',cursive;font-size:20px;line-height:1;color:#5079b2;
+      transform:rotate(-4deg);transform-origin:left;width:220px;display:block;
+    }
+
+    /* ——— MOBILE ——— */
+    @media(max-width:768px){
+      .ez-row{flex-direction:column!important;justify-content:flex-end!important;align-items:flex-start!important;padding:24px 24px 116px!important;gap:18px!important;}
+      .s2-left,.s2-right,.s3-left,.s3-right{width:100%!important;max-width:90vw!important;}
+      .ez-bigword{font-size:clamp(30px,9vw,40px)!important;}
+      .ez-pros{top:auto!important;bottom:160px!important;left:24px!important;transform:none!important;}
+      .ez-cons{top:auto!important;bottom:160px!important;right:24px!important;transform:none!important;}
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+<div id="spin"></div>
+<a id="ez-site" href="https://ezmotif.com" target="_blank" rel="noopener">ezmotif.com<span class="ez-arrow">→</span></a>
+
+<!-- ============ SCREEN 1 — HI / INTRO (blue) ============ -->
+<section id="s1">
+  <!-- Ghost letterform sits behind the 3D model -->
+  <div class="s1-ghost" aria-hidden="true">EDEN</div>
+
+  <!-- Top: Kia Ora greeting (parallax up) -->
+  <div class="s1-top" data-parallax="-0.06">
+    <div class="s1-kiaora">Kia Ora</div>
+    <div class="s1-tagline">Designer · powered by curiosity, coffee &amp; ice cream</div>
+  </div>
+
+  <!-- Left: Pros (parallax down, vertically centred) -->
+  <div class="ez-pros" data-parallax-vcenter="0.05">
+    <div class="label-lime">Pros</div>
+    <div class="script-sm">Curious<br>Experimental<br>Responsible</div>
+  </div>
+
+  <!-- Right: Cons (parallax down, vertically centred) -->
+  <div class="ez-cons" data-parallax-vcenter="0.05">
+    <div class="label-mist">Cons</div>
+    <div class="script-sm">OCD<br>Hyperactive<br>(sometimes)</div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div id="hint1" class="s1-hint">
+    <div class="hint-label">Scroll</div>
+    <div class="hint-line"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 2 — IDEA HATCHING (stone) ============ -->
+<section id="s2">
+  <div class="ez-row">
+    <div class="s2-left" data-parallax="-0.10">
+      <div class="s2-headline">
+        <div class="ez-bigword">HATCH</div>
+        <div class="ez-bigword">IDEAS</div>
+      </div>
+      <span class="s2-accent">Hydration level: 1L of coffee and absolutely no regrets. ☕️😌</span>
+    </div>
+    <div class="s2-right" data-parallax="0.08">
+      <p class="body-s2">For the past seven years I've helped brands, products and teams bring ideas to life through thoughtful design — global campaigns, digital experiences, brand identities, and everything in between.</p>
+      <p class="body-s2">I love simplifying complicated things and finding inspiration where most people overlook it — crafting experiences that feel natural, memorable and genuinely human.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 3 — OUTSIDE WORK (lime) ============ -->
+<section id="s3">
+  <div class="ez-row">
+    <div class="s3-left" data-parallax="-0.10">
+      <div class="s3-headline">
+        <div class="ez-bigword">Outside</div>
+        <div class="ez-bigword">Work</div>
+      </div>
+    </div>
+    <div class="s3-right" data-parallax="0.08">
+      <p class="body-s3">When I'm not designing, you'll probably find me exploring new cafés, hiking through natural landscapes, or soaking in the gym.</p>
+      <span class="s3-accent">No signal: Somewhere on a trail, upgrading my cardio instead of my inbox. 🌲🥾</span>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  const MODEL_URLS = [
+    'https://dl.dropboxusercontent.com/scl/fi/qskipl5zqc1no1ounqouc/Hi_Textured-view.glb?rlkey=ff3zc77q9altmlkda5raiq63v&dl=1',
+    'https://dl.dropboxusercontent.com/scl/fi/xvqv9pbvxfb0mbg5f8zss/Idea-Hatching_Textured-View.glb?rlkey=uu3fpdk7akxqth5jfztjdgkla&dl=1',
+    'https://dl.dropboxusercontent.com/scl/fi/fm1mu1jkcd6yvwdm8pyba/Outside-Work_Textured-View.glb?rlkey=k71y0a2swxvliftqetm3ejufc&dl=1',
+  ];
+
+  const DEG = Math.PI / 180;
+  const FRONT_YAW = [-90 * DEG, -90 * DEG, -90 * DEG]; // face toward viewer
+  const TARGET_H   = 2.2;   // world-unit height each model is scaled to
+  const SPAN       = 4.4;   // world units = one viewport height at model depth
+  const PAR        = 0.82;  // model trails the page (< 1)
+  const SCROLL_SPIN = 2.0;  // radians the model spins across one screen of scroll
+
+  const THREE = await import('https://esm.sh/three@0.160.0');
+  const { GLTFLoader } = await import('https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js');
+  const { RoomEnvironment } = await import('https://esm.sh/three@0.160.0/examples/jsm/environments/RoomEnvironment.js');
+
+  // Renderer
+  const canvas = document.getElementById('scene');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+  camera.position.set(0, 0, 7);
+
+  // Environment lighting
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+  // Directional lights
+  const key = new THREE.DirectionalLight(0xffffff, 2.4);
+  key.position.set(3, 5, 4);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffe9d6, 0.7);
+  fill.position.set(-4, 2, 2);
+  scene.add(fill);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+
+  // Resize
+  function resize() {
+    const w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Model loading
+  const groups    = [null, null, null];
+  const requested = [false, false, false];
+  const loader    = new GLTFLoader();
+  const spin      = document.getElementById('spin');
+
+  function loadModel(i) {
+    if (requested[i]) return;
+    requested[i] = true;
+    if (spin) spin.style.opacity = '1';
+
+    loader.load(MODEL_URLS[i], (gltf) => {
+      const obj  = gltf.scene;
+      const box  = new THREE.Box3().setFromObject(obj);
+      const size = new THREE.Vector3();
+      const ctr  = new THREE.Vector3();
+      box.getSize(size);
+      box.getCenter(ctr);
+      const s = TARGET_H / (size.y || 1);
+      obj.scale.setScalar(s);
+      obj.position.set(-ctr.x * s, -ctr.y * s, -ctr.z * s);
+      const g = new THREE.Group();
+      g.add(obj);
+      g.visible = false;
+      scene.add(g);
+      groups[i] = g;
+      if (spin) spin.style.opacity = '0';
+    }, undefined, (err) => {
+      requested[i] = false;
+      console.error('[Eden3D] failed to load model', i, err);
+      if (spin) spin.style.opacity = '0';
+    });
+  }
+  loadModel(0); // load first model immediately; others lazy-load on approach
+
+  // Mouse / touch tracking
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX / window.innerWidth  - 0.5;
+    mouseY = e.clientY / window.innerHeight - 0.5;
+  }, { passive: true });
+  window.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    mouseX = t.clientX / window.innerWidth  - 0.5;
+    mouseY = t.clientY / window.innerHeight - 0.5;
+  }, { passive: true });
+
+  // Parallax elements — two flavours:
+  //   data-parallax          → standard elements: translateY only
+  //   data-parallax-vcenter  → already -50% vertically centred; combine with offset
+  const SECTION_IDS = ['s1', 's2', 's3'];
+  const parItems = [];
+  document.querySelectorAll('[data-parallax],[data-parallax-vcenter]').forEach(el => {
+    const raw = el.dataset.parallax ?? el.dataset.parallaxVcenter;
+    parItems.push({ el, rate: parseFloat(raw), vcenter: 'parallaxVcenter' in el.dataset });
+  });
+
+  // Smooth rotation state
+  const st = { mRY: 0, rx: 0 };
+  const hint = document.getElementById('hint1');
+
+  function tick() {
+    const vh  = window.innerHeight;
+    const sy  = window.scrollY || 0;
+    const prg = sy / vh;           // 0 at top of s1, 1 at top of s2, 2 at top of s3
+    const mob = window.innerWidth <= 768;
+
+    // Smooth mouse
+    st.mRY += ((mouseX * 0.55) - st.mRY) * 0.08;
+    st.rx  += (Math.max(-0.42, Math.min(0.42, mouseY * 0.4)) - st.rx) * 0.08;
+
+    // Lazy-load models as they come within ~1.3 screens
+    for (let i = 0; i < 3; i++) {
+      if (Math.abs(prg - i) < 1.3) loadModel(i);
+    }
+
+    // On mobile the model lifts into the upper band so stacked text sits clear below
+    const yLift = mob ? 1.45 : 0;
+
+    groups.forEach((g, i) => {
+      if (!g) return;
+      const d = prg - i;
+      g.visible    = Math.abs(d) < 0.92;
+      g.position.y = d * SPAN * PAR + yLift;
+      g.rotation.y = FRONT_YAW[i] + d * SCROLL_SPIN + st.mRY;
+      g.rotation.x = st.rx;
+    });
+
+    // Parallax text
+    parItems.forEach(({ el, rate, vcenter }) => {
+      const section = el.closest('section');
+      if (!section) return;
+      const secIdx = SECTION_IDS.indexOf(section.id);
+      if (secIdx < 0) return;
+      const offset = (sy - secIdx * vh) * rate;
+
+      if (vcenter && !mob) {
+        // Combine the centering offset with parallax
+        el.style.transform = `translateY(calc(-50% + ${offset}px))`;
+      } else if (!vcenter) {
+        el.style.transform = `translateY(${offset}px)`;
+      }
+      // On mobile, leave ez-pros/ez-cons for CSS to handle (transform:none override)
+    });
+
+    // Fade scroll hint
+    if (hint) hint.style.opacity = String(Math.max(0, 1 - sy / 280));
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+</script>
+</body>
+</html>
