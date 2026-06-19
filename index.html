@@ -123,8 +123,8 @@
 
     /* ——— MOBILE ——— */
     @media(max-width:768px){
-      /* Stack columns; generous bottom padding keeps content above ezmotif button */
-      .ez-row{flex-direction:column!important;justify-content:flex-end!important;align-items:flex-start!important;padding:24px 24px 180px!important;gap:14px!important;}
+      /* Stack columns; padding-top pushes content below the 3D model (~54vh from top) */
+      .ez-row{flex-direction:column!important;justify-content:flex-start!important;align-items:flex-start!important;padding:57vh 24px 32px!important;gap:14px!important;}
       .s2-left,.s2-right,.s3-left,.s3-right{width:100%!important;max-width:100%!important;}
 
       /* ── Screen 1 ──────────────────────────────────────── */
@@ -142,8 +142,6 @@
       /* "HATCH IDEAS" / "OUTSIDE WORK" → single line */
       .s2-headline,.s3-headline{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:0.25em!important;align-items:baseline!important;}
       .ez-bigword{font-size:clamp(26px,7.5vw,34px)!important;display:block!important;}
-      /* Accent width matches the paragraph container */
-      .s2-accent,.s3-accent{width:100%!important;}
       /* Body text exactly 14px */
       .body-s2,.body-s3{font-size:14px!important;line-height:1.6!important;}
     }
@@ -193,7 +191,6 @@
         <div class="ez-bigword">HATCH</div>
         <div class="ez-bigword">IDEAS</div>
       </div>
-      <span class="s2-accent">Hydration level: 1L of coffee and absolutely no regrets. ☕️😌</span>
     </div>
     <div class="s2-right" data-parallax="0.08">
       <p class="body-s2">For the past seven years I've helped brands, products and teams bring ideas to life through thoughtful design — global campaigns, digital experiences, brand identities, and everything in between.</p>
@@ -213,7 +210,6 @@
     </div>
     <div class="s3-right" data-parallax="0.08">
       <p class="body-s3">When I'm not designing, you'll probably find me exploring new cafés, hiking through natural landscapes, or soaking in the gym.</p>
-      <span class="s3-accent">No signal: Somewhere on a trail, upgrading my cardio instead of my inbox. 🌲🥾</span>
     </div>
   </div>
 </section>
