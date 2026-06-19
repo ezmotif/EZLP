@@ -124,8 +124,8 @@
     /* ——— MOBILE ——— */
     @media(max-width:768px){
       /* Stack columns; padding-top pushes content below the 3D model (~54vh from top) */
-      .ez-row{flex-direction:column!important;justify-content:flex-start!important;align-items:flex-start!important;padding:57vh 24px 32px!important;gap:14px!important;}
-      .s2-left,.s2-right,.s3-left,.s3-right{width:100%!important;max-width:100%!important;}
+      .ez-row{flex-direction:column!important;justify-content:flex-start!important;align-items:flex-start!important;padding:62vh 24px 32px!important;gap:14px!important;}
+      .s2-left,.s2-right,.s3-left,.s3-right{width:100%!important;max-width:100%!important;text-align:center!important;}
 
       /* ── Screen 1 ──────────────────────────────────────── */
       /* Kia Ora + tagline float above the model (top of screen) */
@@ -139,11 +139,11 @@
       .ez-cons{top:auto!important;bottom:190px!important;right:24px!important;transform:none!important;}
 
       /* ── Screens 2 & 3 ─────────────────────────────────── */
-      /* "HATCH IDEAS" / "OUTSIDE WORK" → single line */
-      .s2-headline,.s3-headline{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:0.25em!important;align-items:baseline!important;}
+      /* "IDEA HATCHING" / "OUTSIDE WORK" → single centred line with wider word spacing */
+      .s2-headline,.s3-headline{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:0.65em!important;align-items:baseline!important;justify-content:center!important;}
       .ez-bigword{font-size:clamp(26px,7.5vw,34px)!important;display:block!important;}
-      /* Body text exactly 14px */
-      .body-s2,.body-s3{font-size:14px!important;line-height:1.6!important;}
+      /* Body text exactly 14px, centred */
+      .body-s2,.body-s3{font-size:14px!important;line-height:1.6!important;text-align:center!important;}
     }
   </style>
 </head>
@@ -188,8 +188,8 @@
   <div class="ez-row">
     <div class="s2-left" data-parallax="-0.10">
       <div class="s2-headline">
-        <div class="ez-bigword">HATCH</div>
-        <div class="ez-bigword">IDEAS</div>
+        <div class="ez-bigword">IDEA</div>
+        <div class="ez-bigword">HATCHING</div>
       </div>
     </div>
     <div class="s2-right" data-parallax="0.08">
