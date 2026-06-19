@@ -123,17 +123,29 @@
 
     /* ——— MOBILE ——— */
     @media(max-width:768px){
-      /* Stack columns, bigger bottom gap so ezmotif button never covers content */
+      /* Stack columns; generous bottom padding keeps content above ezmotif button */
       .ez-row{flex-direction:column!important;justify-content:flex-end!important;align-items:flex-start!important;padding:24px 24px 180px!important;gap:14px!important;}
-      .s2-left,.s2-right,.s3-left,.s3-right{width:100%!important;max-width:90vw!important;}
-      .ez-bigword{font-size:clamp(28px,8.5vw,38px)!important;}
-      /* Push Kia Ora + tagline below the (smaller) model — ~46% down */
-      .s1-top{top:46vh!important;padding:0 24px!important;text-align:left!important;}
-      .s1-kiaora{font-size:36px!important;}
-      .s1-tagline{font-size:11px!important;letter-spacing:0.14em!important;}
-      /* Pros/Cons sit above the ezmotif button with breathing room */
+      .s2-left,.s2-right,.s3-left,.s3-right{width:100%!important;max-width:100%!important;}
+
+      /* ── Screen 1 ──────────────────────────────────────── */
+      /* Kia Ora + tagline float above the model (top of screen) */
+      .s1-top{top:5vh!important;padding:0 28px!important;text-align:center!important;}
+      .s1-kiaora{font-size:52px!important;}
+      .s1-tagline{font-size:13px!important;letter-spacing:0.16em!important;margin-top:8px!important;}
+      /* EDEN ghost: centred on the 3D model position (yLift=0.5 → ~39 vh from top) */
+      .s1-ghost{inset:auto!important;position:absolute!important;top:39vh!important;left:0!important;right:0!important;width:100%!important;display:block!important;transform:translateY(-50%)!important;text-align:center!important;font-size:23vw!important;}
+      /* Pros/Cons anchored above the ezmotif button */
       .ez-pros{top:auto!important;bottom:190px!important;left:24px!important;transform:none!important;}
       .ez-cons{top:auto!important;bottom:190px!important;right:24px!important;transform:none!important;}
+
+      /* ── Screens 2 & 3 ─────────────────────────────────── */
+      /* "HATCH IDEAS" / "OUTSIDE WORK" → single line */
+      .s2-headline,.s3-headline{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:0.25em!important;align-items:baseline!important;}
+      .ez-bigword{font-size:clamp(26px,7.5vw,34px)!important;display:block!important;}
+      /* Accent width matches the paragraph container */
+      .s2-accent,.s3-accent{width:100%!important;}
+      /* Body text exactly 14px */
+      .body-s2,.body-s3{font-size:14px!important;line-height:1.6!important;}
     }
   </style>
 </head>
@@ -335,39 +347,40 @@
       if (Math.abs(prg - i) < 1.3) loadModel(i);
     }
 
-    // On mobile: smaller models + lift into upper band so text sits clear below.
-    // yLift 0.9 → model centre at ~30% from screen top; scale 0.62 → fits without clipping.
-    // Tighter visibility window (0.72) reduces cross-section bleed during scrolling.
-    const yLift   = mob ? 0.9  : 0;
+    // Mobile: PAR=1.0 (no trail), yLift=0.5 (model at ~39% from top, heading fits above),
+    // scale=0.62, tight visDist=0.5 so models only show on their own screen.
+    const par     = mob ? 1.0  : PAR;
+    const yLift   = mob ? 0.5  : 0;
     const mScale  = mob ? 0.62 : 1.0;
-    const visDist = mob ? 0.72 : 0.92;
+    const visDist = mob ? 0.5  : 0.92;
 
     groups.forEach((g, i) => {
       if (!g) return;
       const d = prg - i;
       g.visible    = Math.abs(d) < visDist;
       g.scale.setScalar(mScale);
-      g.position.y = d * SPAN * PAR + yLift;
+      g.position.y = d * SPAN * par + yLift;
       g.rotation.y = FRONT_YAW[i] + d * SCROLL_SPIN + st.mRY;
       g.rotation.x = st.rx;
     });
 
-    // Parallax text
-    parItems.forEach(({ el, rate, vcenter }) => {
-      const section = el.closest('section');
-      if (!section) return;
-      const secIdx = SECTION_IDS.indexOf(section.id);
-      if (secIdx < 0) return;
-      const offset = (sy - secIdx * vh) * rate;
-
-      if (vcenter && !mob) {
-        // Combine the centering offset with parallax
-        el.style.transform = `translateY(calc(-50% + ${offset}px))`;
-      } else if (!vcenter) {
-        el.style.transform = `translateY(${offset}px)`;
-      }
-      // On mobile, leave ez-pros/ez-cons for CSS to handle (transform:none override)
-    });
+    // Parallax text — disabled on mobile to prevent overlaps
+    if (!mob) {
+      parItems.forEach(({ el, rate, vcenter }) => {
+        const section = el.closest('section');
+        if (!section) return;
+        const secIdx = SECTION_IDS.indexOf(section.id);
+        if (secIdx < 0) return;
+        const offset = (sy - secIdx * vh) * rate;
+        if (vcenter) {
+          el.style.transform = `translateY(calc(-50% + ${offset}px))`;
+        } else {
+          el.style.transform = `translateY(${offset}px)`;
+        }
+      });
+    } else {
+      parItems.forEach(({ el }) => { el.style.transform = ''; });
+    }
 
     // Fade scroll hint
     if (hint) hint.style.opacity = String(Math.max(0, 1 - sy / 280));
